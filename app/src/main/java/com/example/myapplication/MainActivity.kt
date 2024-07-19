@@ -3,7 +3,6 @@ package com.example.myapplication
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cloud.eppo.android.EppoClient
+import cloud.eppo.ufc.dto.EppoValue
+import cloud.eppo.ufc.dto.SubjectAttributes
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,14 +23,17 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     // replace the values below with your own experiment and subject keys
+    val subjectAttributes = SubjectAttributes(mapOf("companyId" to EppoValue.valueOf("1")))
+    val eppoClient = EppoClient.getInstance()
     Handler(Looper.getMainLooper()).postDelayed({
       val assignedVariation =
-        EppoClient.getInstance().getStringAssignment("llama3_vs_gpt4o", "test-subject-key", "")
+        eppoClient.getBooleanAssignment("test-flag", "test-subject-key",
+          subjectAttributes, false)
       setContent {
         MyApplicationTheme {
           Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             Greeting(
-              name = assignedVariation,
+              name = assignedVariation.toString(),
               modifier = Modifier.padding(innerPadding)
             )
           }
