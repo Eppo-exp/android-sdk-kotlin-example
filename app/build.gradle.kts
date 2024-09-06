@@ -4,10 +4,15 @@ plugins {
     jacoco
 }
 
+apply {
+    from("./jacoco.gradle")
+}
+
 jacoco {
     toolVersion = "0.8.12"
     reportsDirectory = layout.buildDirectory.dir("customJacocoReportDir")
 }
+
 
 android {
     namespace = "com.example.myapplication"
