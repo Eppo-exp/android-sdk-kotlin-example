@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cloud.eppo.android.EppoClient
-import cloud.eppo.ufc.dto.EppoValue
-import cloud.eppo.ufc.dto.SubjectAttributes
+import cloud.eppo.api.Attributes
+import cloud.eppo.api.EppoValue
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     // replace the values below with your own experiment and subject keys
-    val subjectAttributes = SubjectAttributes(mapOf("companyId" to EppoValue.valueOf("1")))
+    val subjectAttributes = Attributes(mapOf("companyId" to EppoValue.valueOf("1")))
+
     val eppoClient = EppoClient.getInstance()
     Handler(Looper.getMainLooper()).postDelayed({
       val assignedVariation =
